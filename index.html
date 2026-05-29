@@ -90,21 +90,44 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.5rem;
       text-align: center;
-      padding: 1rem;
+      padding: 2rem 1.5rem;
+      max-width: min(560px, 92vw);
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .expired-emoji {
+      font-size: clamp(4rem, 18vw, 6rem);
+      line-height: 1;
+    }
+
+    .expired-title {
+      font-size: clamp(1.6rem, 7vw, 2.4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b9d, #ff9a9e, #fecfef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
     }
 
     .expired-text {
-      font-size: clamp(2rem, 10vw, 3.5rem);
-      font-weight: 700;
-      color: #ff4444;
-      letter-spacing: -0.02em;
+      font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+      font-weight: 400;
+      color: #bbb;
+      line-height: 1.8;
+      letter-spacing: 0.01em;
     }
 
     .expired-sub {
       font-size: clamp(0.8rem, 3vw, 0.95rem);
-      color: #666;
+      color: #444;
       letter-spacing: 0.08em;
     }
 
@@ -160,8 +183,15 @@
   <div class="emoji" id="emoji"></div>
 
   <div class="expired" id="expired">
-    <span class="expired-text">Tempo esgotado!</span>
-    <span class="expired-sub">01/06/2026 15:00 — Brasília</span>
+    <div class="expired-emoji">🥰</div>
+    <div class="expired-title">Ela chegou.</div>
+    <div class="expired-text">
+      Vinte dias inteiros sem você foram longos demais.<br>
+      Cada hora desse contador foi vivida com saudade,<br>
+      pensando no momento exato desse reencontro.<br><br>
+      Seja bem-vinda de volta, meu amor.<br>
+      Você fez muita falta — e eu te amo mais do que as palavras conseguem dizer.
+    </div>
   </div>
 
   <script>
