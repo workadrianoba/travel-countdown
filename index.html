@@ -131,13 +131,6 @@
       letter-spacing: 0.08em;
     }
 
-    .emoji {
-      font-size: clamp(3rem, 14vw, 5rem);
-      line-height: 1;
-      text-align: center;
-      transition: opacity 0.5s ease;
-    }
-
     .progress-bar-container {
       width: min(560px, 92vw);
       height: 3px;
@@ -152,6 +145,13 @@
       border-radius: 2px;
       transition: width 1s linear;
     }
+
+    .section-divider {
+      width: min(560px, 92vw);
+      height: 1px;
+      background: #1e1e1e;
+      margin: clamp(0.5rem, 2vw, 1rem) 0;
+    }
   </style>
 </head>
 <body>
@@ -159,35 +159,33 @@
   <h1>Contagem Regressiva Punta Cana</h1>
   <p class="target-date">20 de agosto de 2026 &mdash; 01:00 (Brasília)</p>
 
-  <div class="timer" id="timer">
+  <div class="timer" id="timer1">
     <div class="unit">
-      <span class="value" id="days">00</span>
+      <span class="value" id="days1">00</span>
       <span class="label">Dias</span>
     </div>
     <div class="separator">:</div>
     <div class="unit">
-      <span class="value" id="hours">00</span>
+      <span class="value" id="hours1">00</span>
       <span class="label">Horas</span>
     </div>
     <div class="separator">:</div>
     <div class="unit">
-      <span class="value" id="minutes">00</span>
+      <span class="value" id="minutes1">00</span>
       <span class="label">Minutos</span>
     </div>
     <div class="separator">:</div>
     <div class="unit">
-      <span class="value" id="seconds">00</span>
+      <span class="value" id="seconds1">00</span>
       <span class="label">Segundos</span>
     </div>
   </div>
 
   <div class="progress-bar-container">
-    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-bar" id="progressBar1"></div>
   </div>
 
-  <div class="emoji" id="emoji"></div>
-
-  <div class="expired" id="expired">
+  <div class="expired" id="expired1">
     <div class="expired-emoji">🥰</div>
     <div class="expired-title">Ela chegou.</div>
     <div class="expired-text">
@@ -199,53 +197,92 @@
     </div>
   </div>
 
-  <script>
-    const TARGET = new Date('2026-08-20T01:00:00-03:00');
+  <div class="section-divider"></div>
 
-    // Data de referência para a barra de progresso:
-    // usamos o momento em que a página foi aberta (ou poderia ser uma data de início fixa)
+  <h1>Contagem Regressiva Cruzeiro</h1>
+  <p class="target-date">31 de janeiro de 2027 (Brasília)</p>
+
+  <div class="timer" id="timer2">
+    <div class="unit">
+      <span class="value" id="days2">00</span>
+      <span class="label">Dias</span>
+    </div>
+    <div class="separator">:</div>
+    <div class="unit">
+      <span class="value" id="hours2">00</span>
+      <span class="label">Horas</span>
+    </div>
+    <div class="separator">:</div>
+    <div class="unit">
+      <span class="value" id="minutes2">00</span>
+      <span class="label">Minutos</span>
+    </div>
+    <div class="separator">:</div>
+    <div class="unit">
+      <span class="value" id="seconds2">00</span>
+      <span class="label">Segundos</span>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar2"></div>
+  </div>
+
+  <div class="expired" id="expired2">
+    <div class="expired-emoji">⚓</div>
+    <div class="expired-title">Hora de zarpar!</div>
+    <div class="expired-text">
+      A aventura que tanto esperamos finalmente chegou.<br>
+      O mar nos chama — vamos juntos.
+    </div>
+  </div>
+
+  <script>
     const PAGE_LOAD = Date.now();
 
     function pad(n) {
       return String(n).padStart(2, '0');
     }
 
-    function tick() {
-      const now = Date.now();
-      const diff = TARGET.getTime() - now;
+    function createCountdown(targetDate, ids, startRef) {
+      const target = new Date(targetDate).getTime();
 
-      if (diff <= 0) {
-        document.getElementById('timer').style.display = 'none';
-        document.querySelector('.progress-bar-container').style.display = 'none';
-        document.getElementById('expired').style.display = 'flex';
-        return;
+      function tick() {
+        const now = Date.now();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          document.getElementById(ids.timer).style.display = 'none';
+          document.getElementById(ids.progressBar).closest('.progress-bar-container').style.display = 'none';
+          document.getElementById(ids.expired).style.display = 'flex';
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        document.getElementById(ids.days).textContent    = pad(Math.floor(totalSeconds / 86400));
+        document.getElementById(ids.hours).textContent   = pad(Math.floor((totalSeconds % 86400) / 3600));
+        document.getElementById(ids.minutes).textContent = pad(Math.floor((totalSeconds % 3600) / 60));
+        document.getElementById(ids.seconds).textContent = pad(totalSeconds % 60);
+
+        const elapsed   = now - PAGE_LOAD;
+        const remaining = target - PAGE_LOAD;
+        const pct       = remaining > 0 ? Math.max(0, Math.min(100, (elapsed / remaining) * 100)) : 100;
+        document.getElementById(ids.progressBar).style.width = pct + '%';
       }
 
-      const totalSeconds = Math.floor(diff / 1000);
-      const days    = Math.floor(totalSeconds / 86400);
-      const hours   = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      document.getElementById('days').textContent    = pad(days);
-      document.getElementById('hours').textContent   = pad(hours);
-      document.getElementById('minutes').textContent = pad(minutes);
-      document.getElementById('seconds').textContent = pad(seconds);
-
-      const totalHours = totalSeconds / 3600;
-      const emoji = totalHours < 5 ? '😍' : totalHours < 12 ? '😂' : totalHours < 24 ? '🙂' : totalHours < 36 ? '😢' : '😭';
-      document.getElementById('emoji').textContent = emoji;
-
-      // Barra de progresso: percentual do tempo total transcorrido
-      const totalSpan = TARGET.getTime() - (TARGET.getTime() - (7 * 24 * 3600 * 1000)); // últimos 7 dias como janela de referência
-      const elapsed   = now - PAGE_LOAD;
-      const remaining = TARGET.getTime() - PAGE_LOAD;
-      const pct       = remaining > 0 ? Math.max(0, Math.min(100, (elapsed / remaining) * 100)) : 100;
-      document.getElementById('progressBar').style.width = pct + '%';
+      tick();
+      setInterval(tick, 1000);
     }
 
-    tick();
-    setInterval(tick, 1000);
+    createCountdown('2026-08-20T01:00:00-03:00', {
+      timer: 'timer1', days: 'days1', hours: 'hours1', minutes: 'minutes1', seconds: 'seconds1',
+      progressBar: 'progressBar1', expired: 'expired1'
+    });
+
+    createCountdown('2027-01-31T00:00:00-03:00', {
+      timer: 'timer2', days: 'days2', hours: 'hours2', minutes: 'minutes2', seconds: 'seconds2',
+      progressBar: 'progressBar2', expired: 'expired2'
+    });
   </script>
 
 </body>
