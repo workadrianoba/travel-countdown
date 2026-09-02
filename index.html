@@ -150,48 +150,6 @@
 </head>
 <body>
 
-  <h1>Contagem Regressiva Punta Cana</h1>
-  <p class="target-date">20 de agosto de 2026 &mdash; 01:00 (Brasília)</p>
-
-  <div class="timer" id="timer1">
-    <div class="unit">
-      <span class="value" id="days1">00</span>
-      <span class="label">Dias</span>
-    </div>
-    <div class="separator">:</div>
-    <div class="unit">
-      <span class="value" id="hours1">00</span>
-      <span class="label">Horas</span>
-    </div>
-    <div class="separator">:</div>
-    <div class="unit">
-      <span class="value" id="minutes1">00</span>
-      <span class="label">Minutos</span>
-    </div>
-    <div class="separator">:</div>
-    <div class="unit">
-      <span class="value" id="seconds1">00</span>
-      <span class="label">Segundos</span>
-    </div>
-  </div>
-
-  <div class="progress-bar-container">
-    <div class="progress-bar" id="progressBar1"></div>
-  </div>
-
-  <div class="expired" id="expired1">
-    <div class="expired-emoji">🌊</div>
-    <div class="expired-title">Chegamos, Bruna.</div>
-    <div class="expired-text">
-      O mar de Punta Cana está ali — e nós estamos juntos.<br>
-      Cada onda que vai e vem não sabe o quanto esperamos por esse momento.<br><br>
-      Que essa praia guarde a nossa história:<br>
-      a areia nos pés, o sol na pele, e você do meu lado.<br><br>
-      Vamos descobrir tudo isso juntos, como deve ser.<br>
-      Essa aventura é nossa — e só está começando.
-    </div>
-  </div>
-
   <h1>Contagem Regressiva Floripa</h1>
   <p class="target-date">21 de novembro de 2026 &mdash; 01:00 (Brasília)</p>
 
@@ -342,11 +300,6 @@
       tick();
       setInterval(tick, 1000);
     }
-
-    createCountdown('2026-08-20T01:00:00-03:00', {
-      timer: 'timer1', days: 'days1', hours: 'hours1', minutes: 'minutes1', seconds: 'seconds1',
-      progressBar: 'progressBar1', expired: 'expired1'
-    });
 
     createCountdown('2026-11-21T01:00:00-03:00', {
       timer: 'timer3', days: 'days3', hours: 'hours3', minutes: 'minutes3', seconds: 'seconds3',
